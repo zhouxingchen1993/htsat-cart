@@ -1,10 +1,12 @@
 package com.htsat.cart.web;
 
+import com.htsat.cart.dao.REcUserinfoMapper;
 import com.htsat.cart.dto.ShoppingCartDTO;
 import com.htsat.cart.dto.StatusDTO;
 import com.htsat.cart.enums.ExcuteStatusEnum;
 import com.htsat.cart.model.REcShoppingcart;
 import com.htsat.cart.model.REcSku;
+import com.htsat.cart.model.REcUserinfo;
 import com.htsat.cart.service.IRedisService;
 import com.htsat.cart.service.IShoppingCartService;
 import com.htsat.cart.service.IUserService;
@@ -128,6 +130,15 @@ public class ShoppingCartController {
             return null;
         }
         return returnShoppingCartDTO;
+    }
+
+    @Autowired
+    REcUserinfoMapper userinfoMapper;
+
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    @ResponseBody
+    public REcUserinfo getUserInfor(@PathVariable("userId") Integer userId){
+        return userinfoMapper.selectByPrimaryKey(userId);
     }
 
     private StatusDTO returnStatus(boolean result, StatusDTO status) {
